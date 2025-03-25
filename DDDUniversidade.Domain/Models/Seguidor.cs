@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DDDUniversidade.Domain.Models
@@ -12,7 +13,10 @@ namespace DDDUniversidade.Domain.Models
 
         public int SeguidoId { get; set; }
 
+        [JsonIgnore]
         public Usuario Segue { get; set; }
+
+        [JsonIgnore]
         public Usuario Seguido { get; set; }
     }
 }

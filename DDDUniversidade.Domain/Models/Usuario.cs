@@ -1,4 +1,6 @@
-﻿namespace DDDUniversidade.Domain.Models
+﻿using System.Text.Json.Serialization;
+
+namespace DDDUniversidade.Domain.Models
 {
     public class Usuario : BaseModel
     {
@@ -6,8 +8,13 @@
         public string Email { get; set; }
         public string Curso { get; set; }
 
+        [JsonIgnore]
         public ICollection<Seguidor> Seguidores { get; set; }
+
+        [JsonIgnore]
         public ICollection<Seguidor> Seguindo { get; set; }
+
+        [JsonIgnore]
         public ICollection<Postagem> Postagens { get; set; }
     }
 }

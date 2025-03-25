@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DDDUniversidade.Domain.Models
@@ -14,6 +15,7 @@ namespace DDDUniversidade.Domain.Models
         public int Curtidas { get; set; }
         public int Comentarios { get; set; }
 
+        [JsonIgnore]
         public Usuario Autor { get; set; }
     }
 }

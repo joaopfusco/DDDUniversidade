@@ -1,5 +1,4 @@
 using DDDUniversidade.Domain.Interfaces;
-using System;
 using System.Text.Json.Serialization;
 
 namespace DDDUniversidade.Domain.Models
