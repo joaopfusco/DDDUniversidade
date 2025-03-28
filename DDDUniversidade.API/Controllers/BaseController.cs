@@ -16,8 +16,9 @@ namespace DDDUniversidade.API.Controllers
         protected readonly IBaseRepository<TModel> _repository = repository;
         protected readonly ILogger _logger = logger;
 
+        [EnableQuery]
         [HttpGet]
-        public virtual IActionResult GetAll()
+        public virtual IActionResult Get()
         {
             return TryExecute(() =>
             {
@@ -31,22 +32,6 @@ namespace DDDUniversidade.API.Controllers
             return TryExecute(() =>
             {
                 return Ok(_repository.Get(id).FirstOrDefault());
-            });
-        }
-
-        [HttpGet("odata")]
-        public virtual IActionResult Get(ODataQueryOptions<TModel> queryOptions)
-        {
-            return TryExecute(() =>
-            {
-                var query = _repository.Get();
-                var queryfilter = queryOptions.Filter?.ApplyTo(query, new ODataQuerySettings()) ?? query;
-
-                return Ok(new
-                {
-                    _count = queryOptions.Count?.GetEntityCount(queryfilter),
-                    value = queryOptions.ApplyTo(query)
-                });
             });
         }
 
