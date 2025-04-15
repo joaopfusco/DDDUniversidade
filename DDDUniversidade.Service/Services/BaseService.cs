@@ -2,64 +2,38 @@
 using DDDUniversidade.Domain.Models;
 using System.Linq.Expressions;
 using DDDUniversidade.Infra.Data;
+using DDDUniversidade.Infra.Interfaces;
+using DDDUniversidade.Infra.Repositories;
 
 namespace DDDUniversidade.Service.Services
 {
-    public class BaseService<TModel>(AppDbContext db) : IBaseService<TModel> where TModel : BaseModel
+    public class BaseService<TModel>(IBaseRepository<TModel> repository) : IBaseService<TModel> where TModel : BaseModel
     {
-        protected readonly AppDbContext _db = db;
+        protected readonly IBaseRepository<TModel> _repostitory = repository;
 
         public IQueryable<TModel> Get(Expression<Func<TModel, bool>>? predicate = null)
         {
-            var query = _db.Set<TModel>().AsQueryable();
-            if (predicate != null) query = query.Where(predicate);
-            return query;
+            return _repostitory.Get(predicate);
         }
 
         public IQueryable<TModel> Get(int id)
         {
-            return Get(p => p.Id.Equals(id))
-                .AsQueryable();
+            return _repostitory.Get(id);
         }
 
         public virtual int Insert(TModel model)
         {
-            try
-            {
-                _db.Add(model);
-                return _db.SaveChanges();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+            return _repostitory.Insert(model);
+        }   
 
         public virtual int Update(TModel model)
         {
-            try
-            {
-                _db.Update(model);
-                return _db.SaveChanges();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return _repostitory.Update(model);
         }
 
         public virtual int Delete(int id)
         {
-            try
-            {
-                TModel model = Get(id).FirstOrDefault() ?? throw new Exception("Entity not found!");
-                _db.Remove(model);
-                return _db.SaveChanges();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return _repostitory.Delete(id);
         }
     }
 }

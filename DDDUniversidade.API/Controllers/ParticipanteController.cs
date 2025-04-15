@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DDDUniversidade.API.Controllers
 {
-    public class EventoController(IEventoService service, ILogger<EventoController> logger) : BaseController<Evento>(service, logger)
+    public class ParticipanteController(IParticipanteService service, ILogger<ParticipanteController> logger) : BaseController<Participante>(service, logger)
     {
     }
 }

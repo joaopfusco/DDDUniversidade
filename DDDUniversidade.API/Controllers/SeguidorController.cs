@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DDDUniversidade.API.Controllers
 {
-    public class SeguidorController(ISeguidorRepository repository, ILogger<SeguidorController> logger) : BaseController<Seguidor>(repository, logger)
+    public class SeguidorController(ISeguidorService service, ILogger<SeguidorController> logger) : BaseController<Seguidor>(service, logger)
     {
     }
 }

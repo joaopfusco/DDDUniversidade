@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DDDUniversidade.API.Controllers
 {
-    public class UsuarioController(IUsuarioRepository repository, ILogger<UsuarioController> logger) : BaseController<Usuario>(repository, logger)
+    public class UsuarioController(IUsuarioService service, ILogger<UsuarioController> logger) : BaseController<Usuario>(service, logger)
     {
     }
 }

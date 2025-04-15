@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DDDUniversidade.API.Controllers
 {
-    public class PostagemController(IPostagemRepository repository, ILogger<PostagemController> logger) : BaseController<Postagem>(repository, logger)
+    public class PostagemController(IPostagemService service, ILogger<PostagemController> logger) : BaseController<Postagem>(service, logger)
     {
     }
 }

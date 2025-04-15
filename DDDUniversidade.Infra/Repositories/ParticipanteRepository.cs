@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DDDUniversidade.Infra.Repositories
 {
-    public class SeguidorRepository(AppDbContext db) : BaseRepository<Seguidor>(db), ISeguidorRepository
+    public class ParticipanteRepository(AppDbContext db) : BaseRepository<Participante>(db), IParticipanteRepository
     {
     }
 }

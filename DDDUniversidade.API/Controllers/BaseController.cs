@@ -2,6 +2,7 @@ using System.Net;
 using DDDUniversidade.API.Extensions;
 using DDDUniversidade.Domain.Models;
 using DDDUniversidade.Infra.Interfaces;
+using DDDUniversidade.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
@@ -11,9 +12,9 @@ namespace DDDUniversidade.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BaseController<TModel>(IBaseRepository<TModel> repository, ILogger logger) : Controller where TModel : BaseModel
+    public class BaseController<TModel>(IBaseService<TModel> service, ILogger logger) : Controller where TModel : BaseModel
     {
-        protected readonly IBaseRepository<TModel> _repository = repository;
+        protected readonly IBaseService<TModel> _service = service;
         protected readonly ILogger _logger = logger;
 
         [EnableQuery]
@@ -22,7 +23,7 @@ namespace DDDUniversidade.API.Controllers
         {
             return TryExecute(() =>
             {
-                return Ok(_repository.Get());
+                return Ok(_service.Get());
             });
         }
 
@@ -31,7 +32,7 @@ namespace DDDUniversidade.API.Controllers
         {
             return TryExecute(() =>
             {
-                return Ok(_repository.Get(id).FirstOrDefault());
+                return Ok(_service.Get(id).FirstOrDefault());
             });
         }
 
@@ -43,7 +44,7 @@ namespace DDDUniversidade.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                _repository.Insert(model);
+                _service.Insert(model);
                 return Ok(model);
             });
         }
@@ -57,7 +58,7 @@ namespace DDDUniversidade.API.Controllers
                     return BadRequest(ModelState);
 
                 model.Id = id;
-                _repository.Update(model);
+                _service.Update(model);
                 return Ok(model);
             });
         }
@@ -70,7 +71,7 @@ namespace DDDUniversidade.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                _repository.Delete(id);
+                _service.Delete(id);
                 return Ok(id);
             });
         }

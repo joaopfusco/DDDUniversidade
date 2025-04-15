@@ -28,6 +28,7 @@ namespace DDDUniversidade.Infra.Data
         public DbSet<Seguidor> Seguidores { get; set; }
         public DbSet<Evento> Eventos { get; set; }
         public DbSet<Postagem> Postagens { get; set; }
+        public DbSet<Participante> Participantes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -73,6 +74,21 @@ namespace DDDUniversidade.Infra.Data
                     .WithMany(e => e.Postagens)
                     .HasForeignKey(e => e.AutorId)
                     .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            modelBuilder.Entity<Participante>(entity =>
+            {
+                entity.HasOne(e => e.Evento)
+                    .WithMany(e => e.Participantes)
+                    .HasForeignKey(e => e.EventoId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne(e => e.Usuario)
+                    .WithMany()
+                    .HasForeignKey(e => e.UsuarioId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasIndex(e => new { e.EventoId, e.UsuarioId }).IsUnique();
             });
 
             base.OnModelCreating(modelBuilder);
